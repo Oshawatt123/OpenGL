@@ -1,11 +1,1 @@
-﻿  Main.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\corecrt_math_defines.h(22,1): warning C4005:  'M_PI': macro redefinition
-C:\Users\Lewis Arnold\source\repos\SDL_GL_Assignment2\SDL_GL_Assignment2\Libraries\SDL2-2.0.10\include\SDL_stdinc.h(499): message :  see previous definition of 'M_PI'
-C:\Users\Lewis Arnold\source\repos\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(204,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
-C:\Users\Lewis Arnold\source\repos\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(205,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
-C:\Users\Lewis Arnold\source\repos\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(246,21): warning C4018:  '<': signed/unsigned mismatch
-C:\Users\Lewis Arnold\source\repos\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(143,8): warning C4101:  'B': unreferenced local variable
-C:\Users\Lewis Arnold\source\repos\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(141,8): warning C4101:  'R': unreferenced local variable
-C:\Users\Lewis Arnold\source\repos\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(144,8): warning C4101:  'A': unreferenced local variable
-C:\Users\Lewis Arnold\source\repos\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(142,8): warning C4101:  'G': unreferenced local variable
-  SDL_GL_Assignment2.vcxproj -> C:\Users\Lewis Arnold\source\repos\SDL_GL_Assignment2\Debug\SDL_GL_Assignment2.exe
+﻿  SDL_GL_Assignment2.vcxproj -> D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\Debug\SDL_GL_Assignment2.exe
