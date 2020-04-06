@@ -1,0 +1,7 @@
+Loading GLSL shaders
+
+Good as a basis of how it works
+https://www.opengl.org/sdk/docs/tutorials/ClockworkCoders/loading.php
+
+Much favoured implementation
+https://badvertex.com/2012/11/20/how-to-load-a-glsl-shader-in-opengl-using-c.html
