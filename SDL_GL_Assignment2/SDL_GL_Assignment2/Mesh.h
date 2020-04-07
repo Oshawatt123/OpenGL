@@ -3,6 +3,7 @@
 #include <vector>
 
 #include <glm.hpp>
+#include <gtx/normal.hpp>
 #include <glew.h>
 
 #include "Transform.h"
@@ -24,6 +25,7 @@ private:
 		POSITION_VB,
 		TEXCOORD_VB,
 		INDEX_VB,
+		NORMAL_VB,
 		NUM_BUFFERS
 	};
 

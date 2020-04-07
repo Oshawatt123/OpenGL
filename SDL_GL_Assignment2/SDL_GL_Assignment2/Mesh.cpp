@@ -12,6 +12,24 @@ Mesh::Mesh(vertex* verts, unsigned int vertCount, unsigned int* indices, unsigne
 		texCoords.push_back(verts[i].TextureCoord);
 	}
 
+
+	// generate normal vectors for lighting calculations
+	std::vector<vec3> Normals;
+	Normals.resize(vertCount);
+
+	for (int i = 0; i < numIndices; i += 3)
+	{
+		vec3 vert1 = positions[indices[i]];
+		vec3 vert2 = positions[indices[i + 1]];
+		vec3 vert3 = positions[indices[i + 2]];
+
+		vec3 normal = triangleNormal(vert1, vert2, vert3);
+		Normals[indices[i]] += normal;
+		Normals[indices[i + 1]] += normal;
+		Normals[indices[i + 2]] += normal;
+	}
+
+	// generate and populate buffers
 	glGenVertexArrays(1, &m_vertexArrayObject);
 	glBindVertexArray(m_vertexArrayObject);
 	glGenBuffers(NUM_BUFFERS, m_vertexBufferObjects);
@@ -31,6 +49,12 @@ Mesh::Mesh(vertex* verts, unsigned int vertCount, unsigned int* indices, unsigne
 	// index
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vertexBufferObjects[INDEX_VB]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, numIndices * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
+	// normals
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObjects[NORMAL_VB]);
+	glBufferData(GL_ARRAY_BUFFER, vertCount * sizeof(Normals[0]), &Normals[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(NORMAL_VB, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glEnableVertexAttribArray(NORMAL_VB);
 
 	// cleanup
 	glBindVertexArray(0);

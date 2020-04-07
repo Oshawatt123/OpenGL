@@ -7,12 +7,16 @@
 #include <glew.h>
 #include "Camera.h"
 #include "Transform.h"
+#include "LightBase.h"
 
 enum UNIFORMS
 {
 	MODEL_U,
 	PROJECTION_U,
 	VIEW_U,
+	FRAG_LIGHTCOLOR_U,
+	FRAG_LIGHTPOS_U,
+	FRAG_CAMERAPOS_U,
 	NUMBER_UNIFORMS
 };
 
@@ -26,7 +30,7 @@ public:
 
 	void Bind();
 
-	void Update(Transform* transform);
+	void Update(Transform* transform, LightBase& light);
 
 	GLuint getProgram()
 	{

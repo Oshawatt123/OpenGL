@@ -20,10 +20,11 @@ const float SCREEN_HEIGHT = 720;
 #include "Camera.h"
 #include "Vertex.h"
 #include "Shader.h"
+#include "LightBase.h"
 
 GLuint textureID;
 
-void DrawThing(Mesh& thingToDraw, Shader& program)//, vec2 screenPos, vec2 dimensions, vec4 colour)
+void DrawThing(Mesh& thingToDraw, Shader& program, LightBase& light)//, vec2 screenPos, vec2 dimensions, vec4 colour)
 {
 	program.Bind();
 
@@ -32,7 +33,7 @@ void DrawThing(Mesh& thingToDraw, Shader& program)//, vec2 screenPos, vec2 dimen
 	glUniform1i(textureLoc, 0); // 0 for location 0
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
-	program.Update(&thingToDraw.m_transform);
+	program.Update(&thingToDraw.m_transform, light);
 	thingToDraw.Draw();
 }
 
@@ -63,19 +64,22 @@ void LoadTexture(std::string texLocation)
 	// tell openGL how it should handle texture overlap and underlap
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT); // S and T are U and V
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT); // openGL is just special
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, ImageData);
 
-	//glBindTexture(GL_TEXTURE_2D, 0);
+	if (glTexImage2D == NULL)
+	{
+		std::cout << "Texture not loaded by openGL!" << std::endl;
+	}
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 	stbi_image_free(ImageData);
 }
 
 int main(int argc, char* agrv[])
 {
-
-	LoadTexture("../SDL_GL_Assignment2/brickwall.jpg");
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -113,6 +117,8 @@ int main(int argc, char* agrv[])
 	{
 		std::cout << "Lil GLEW is not alright" << std::endl;
 	}
+
+	LoadTexture("../SDL_GL_Assignment2/filthyfrank.bmp");
 
 	// make a camera
 
@@ -166,6 +172,9 @@ int main(int argc, char* agrv[])
 	sceneObject.push_back(&square1);
 
 	bool playing = true;
+
+	LightBase* light = new LightBase();
+	
 
 	while (playing)
 	{
@@ -245,8 +254,10 @@ int main(int argc, char* agrv[])
 
 		for (int i = 0; i < sceneObject.size(); i++)
 		{
-			DrawThing(*sceneObject[i], *limeShader);
+			DrawThing(*sceneObject[i], *limeShader, *light);
 		}
+
+		light->Draw(&cam);
 
 		// swap buffers
 		SDL_GL_SwapWindow(window);

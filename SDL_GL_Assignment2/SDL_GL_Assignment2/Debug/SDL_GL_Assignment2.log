@@ -1,1 +1,15 @@
-﻿  SDL_GL_Assignment2.vcxproj -> D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\Debug\SDL_GL_Assignment2.exe
+﻿  LightBase.cpp
+  Main.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\corecrt_math_defines.h(22,1): warning C4005:  'M_PI': macro redefinition
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Libraries\SDL2-2.0.10\include\SDL_stdinc.h(499): message :  see previous definition of 'M_PI'
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(213,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(214,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(255,21): warning C4018:  '<': signed/unsigned mismatch
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(149,8): warning C4101:  'B': unreferenced local variable
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(147,8): warning C4101:  'R': unreferenced local variable
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(150,8): warning C4101:  'A': unreferenced local variable
+  Mesh.cpp
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(148,8): warning C4101:  'G': unreferenced local variable
+  Generating Code...
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Mesh.cpp(20,20): warning C4018:  '<': signed/unsigned mismatch
+  SDL_GL_Assignment2.vcxproj -> D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\Debug\SDL_GL_Assignment2.exe

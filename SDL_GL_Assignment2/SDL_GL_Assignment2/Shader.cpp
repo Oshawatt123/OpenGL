@@ -68,10 +68,15 @@ Shader::Shader(const std::string vertFilepath, const std::string fragFilepath, C
 	glAttachShader(program, fragShader);
 	glLinkProgram(program);
 
-	// assign uniforms
-	uniformLocation[MODEL_U] = glGetUniformLocation(program, "model");
-	uniformLocation[VIEW_U] = glGetUniformLocation(program, "view");
-	uniformLocation[PROJECTION_U] = glGetUniformLocation(program, "projection");
+	// assign uniform locations
+	uniformLocation[MODEL_U]			= glGetUniformLocation(program, "model");
+	uniformLocation[VIEW_U]				= glGetUniformLocation(program, "view");
+	uniformLocation[PROJECTION_U]		= glGetUniformLocation(program, "projection");
+
+	uniformLocation[FRAG_CAMERAPOS_U]	= glGetUniformLocation(program, "FragCamPos");
+	uniformLocation[FRAG_LIGHTCOLOR_U]	= glGetUniformLocation(program, "FragLightColor");
+	uniformLocation[FRAG_LIGHTPOS_U]	= glGetUniformLocation(program, "FragLightPos");
+
 
 	// assign camera reference
 	cam = &_cam;
@@ -107,9 +112,21 @@ void Shader::Bind()
 	glUseProgram(program);
 }
 
-void Shader::Update(Transform* transform)
+void Shader::Update(Transform* transform, LightBase& light)
 {
 	glUniformMatrix4fv(uniformLocation[MODEL_U], 1, GL_FALSE, &transform->GetModel()[0][0]);
-	glUniformMatrix4fv(uniformLocation[VIEW_U], 1, GL_FALSE, &cam->GenerateViewMatrix()[0][0]);
 	glUniformMatrix4fv(uniformLocation[PROJECTION_U], 1, GL_FALSE, &cam->GeneratePerspectiveProjectionMatrix()[0][0]);
+	glUniformMatrix4fv(uniformLocation[VIEW_U], 1, GL_FALSE, &cam->GenerateViewMatrix()[0][0]);
+
+	glUniform3f(uniformLocation[FRAG_CAMERAPOS_U], cam->m_transform.getPos().x,
+		cam->m_transform.getPos().y,
+		cam->m_transform.getPos().z);
+
+	glUniform3f(uniformLocation[FRAG_LIGHTPOS_U], light.getTransform()->getPos().x,
+		light.getTransform()->getPos().y,
+		light.getTransform()->getPos().z);
+
+	glUniform3f(uniformLocation[FRAG_LIGHTCOLOR_U], light.getColor().x,
+		light.getColor().y,
+		light.getColor().z);
 }
