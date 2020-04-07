@@ -118,7 +118,7 @@ int main(int argc, char* agrv[])
 		std::cout << "Lil GLEW is not alright" << std::endl;
 	}
 
-	LoadTexture("../SDL_GL_Assignment2/filthyfrank.bmp");
+	LoadTexture("../SDL_GL_Assignment2/brickwall.jpg");
 
 	// make a camera
 

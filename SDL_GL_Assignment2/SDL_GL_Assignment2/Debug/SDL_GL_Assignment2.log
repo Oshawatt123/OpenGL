@@ -1,5 +1,4 @@
-﻿  LightBase.cpp
-  Main.cpp
+﻿  Main.cpp
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\corecrt_math_defines.h(22,1): warning C4005:  'M_PI': macro redefinition
 D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Libraries\SDL2-2.0.10\include\SDL_stdinc.h(499): message :  see previous definition of 'M_PI'
 D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(213,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
