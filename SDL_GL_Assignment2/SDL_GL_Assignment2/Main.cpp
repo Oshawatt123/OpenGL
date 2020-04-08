@@ -22,23 +22,30 @@ const float SCREEN_HEIGHT = 720;
 #include "Shader.h"
 #include "LightBase.h"
 
-GLuint textureID;
-
-void DrawThing(Mesh& thingToDraw, Shader& program, LightBase& light)//, vec2 screenPos, vec2 dimensions, vec4 colour)
+void DrawThing(Mesh& thingToDraw, Shader& program, LightBase& light, GLuint texID, GLuint normalID)//, vec2 screenPos, vec2 dimensions, vec4 colour)
 {
 	program.Bind();
 
+	GLuint textureLoc;
+
 	glActiveTexture(GL_TEXTURE0);
-	GLuint textureLoc = glGetUniformLocation(program.getProgram(), "texture_diffuse");
+	textureLoc = glGetUniformLocation(program.getProgram(), "texture_diffuse");
 	glUniform1i(textureLoc, 0); // 0 for location 0
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	glBindTexture(GL_TEXTURE_2D, texID);
+
+	glActiveTexture(GL_TEXTURE1);
+	textureLoc = glGetUniformLocation(program.getProgram(), "texture_normal");
+	glUniform1i(textureLoc, 1); // 0 for location 0
+	glBindTexture(GL_TEXTURE_2D, normalID);
 
 	program.Update(&thingToDraw.m_transform, light);
 	thingToDraw.Draw();
 }
 
-void LoadTexture(std::string texLocation)
+GLuint LoadTexture(std::string texLocation)
 {
+	GLuint textureID;
+
 	// yummy hardcoding
 
 	int width, height, numComponents;
@@ -76,6 +83,8 @@ void LoadTexture(std::string texLocation)
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	stbi_image_free(ImageData);
+
+	return textureID;
 }
 
 int main(int argc, char* agrv[])
@@ -118,7 +127,8 @@ int main(int argc, char* agrv[])
 		std::cout << "Lil GLEW is not alright" << std::endl;
 	}
 
-	LoadTexture("../SDL_GL_Assignment2/brickwall.jpg");
+	GLuint diffuseTex = LoadTexture("../SDL_GL_Assignment2/brickwall.jpg");
+	GLuint normalTex = LoadTexture("../SDL_GL_Assignment2/brickwall_normal.jpg");
 
 	// make a camera
 
@@ -254,7 +264,7 @@ int main(int argc, char* agrv[])
 
 		for (int i = 0; i < sceneObject.size(); i++)
 		{
-			DrawThing(*sceneObject[i], *limeShader, *light);
+			DrawThing(*sceneObject[i], *limeShader, *light, diffuseTex, normalTex);
 		}
 
 		light->Draw(&cam);

@@ -25,6 +25,8 @@ private:
 		POSITION_VB,
 		TEXCOORD_VB,
 		NORMAL_VB,
+		TANGENT_VB,
+		BITANGENT_VB,
 		INDEX_VB,
 		NUM_BUFFERS
 	};
@@ -33,4 +35,6 @@ private:
 	GLuint m_vertexArrayObject = 0;
 
 	GLuint m_pointCount;
+	
+	void CalculateTangentBiTangent(vertex* vertices, unsigned int vertCount, unsigned int* indices, unsigned int numIndices);
 };
