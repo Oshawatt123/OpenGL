@@ -22,6 +22,8 @@ const float SCREEN_HEIGHT = 720;
 #include "Shader.h"
 #include "LightBase.h"
 
+#include "Time.h"
+
 void DrawThing(Mesh& thingToDraw, Shader& program, LightBase& light, GLuint texID, GLuint normalID)//, vec2 screenPos, vec2 dimensions, vec4 colour)
 {
 	program.Bind();
@@ -169,9 +171,22 @@ int main(int argc, char* agrv[])
 		3,6,7,3,2,6  // bottom
 	};
 
+	std::vector<vertex> waterVertices;
+	waterVertices.push_back(vertex(vec3(0.0f, 1.0f, 1.0f), vec2(0, 0))); // top left
+	waterVertices.push_back(vertex(vec3(1.0f, 1.0f, 1.0f), vec2(1, 0))); // top right
+	waterVertices.push_back(vertex(vec3(1.0f, 0.0, 1.0f), vec2(1, 1))); // bottom right
+	waterVertices.push_back(vertex(vec3(0.0f, 0.0f, 1.0f), vec2(0, 1))); // bottom left
+
+	unsigned int waterIndices[]
+	{
+		0,1,2,0,2,3
+	};
+
 	// create shader program
 
 	Shader* phongShader = new Shader("../SDL_GL_Assignment2/simplevertex.vert", "../SDL_GL_Assignment2/texturedFrag.frag", cam);
+	Shader* morphgrid = new Shader("../SDL_GL_Assignment2/basicvert.vert", "../SDL_GL_Assignment2/morphgrid.frag", cam);
+	Shader* waterShaderMaybe = new Shader("../SDL_GL_Assignment2/watermaybe.vert", "../SDL_GL_Assignment2/limefrag.frag", cam);
 
 
 	float R;
@@ -202,8 +217,12 @@ int main(int argc, char* agrv[])
 	sceneObject.push_back(&square1);
 
 	Mesh Cube1(&cubeVertices[0], cubeVertices.size(), &CubeIndices[0], 36);
-	//sceneObject.push_back(&Cube1);
-	//Cube1.m_transform.Translate(-3, 0, 0);
+	sceneObject.push_back(&Cube1);
+	Cube1.m_transform.Translate(-3, 0, 0);
+
+	Mesh square2(&waterVertices[0], waterVertices.size(), &waterIndices[0], 6);
+	sceneObject.push_back(&square2);
+	square2.m_transform.Translate(2, 0, 0);
 
 	bool playing = true;
 
@@ -215,6 +234,9 @@ int main(int argc, char* agrv[])
 
 	while (playing)
 	{
+
+		std::cout << (float)Time::Instance()->GetTimeSinceStart() << std::endl;
+
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
 		{
@@ -308,24 +330,27 @@ int main(int argc, char* agrv[])
 			light->Draw(&cam);
 
 			// draw my scene objects
-			for (int i = 0; i < sceneObject.size(); i++)
-			{
-				DrawThing(*sceneObject[i], *phongShader, *light, diffuseTex, normalTex);
-			}
+			//for (int i = 0; i < sceneObject.size(); i++)
+			//{
+				//DrawThing(*sceneObject[i], *morphgrid, *light, diffuseTex, normalTex);
+			//}
+
+
+			DrawThing(*sceneObject[0], *phongShader, *light, diffuseTex, normalTex);
+			DrawThing(*sceneObject[1], *morphgrid, *light, diffuseTex, normalTex);
+			DrawThing(*sceneObject[2], *waterShaderMaybe, *light, diffuseTex, normalTex);
 
 			std::cout << "X: " << light->getTransform()->getPos().x << " Y: " << light->getTransform()->getPos().y << " Z: " << light->getTransform()->getPos().z << std::endl;
 
 
 			// swap buffers
 			SDL_GL_SwapWindow(window);
-
-			//system("CLS");
-
+			 
 			if (light->getTransform()->getPos().x >= 1)
 			{
 				lightMovingLeft = false;
 			}
-			if (light->getTransform()->getPos().x <= -1)
+			if (light->getTransform()->getPos().x <= -5)
 			{
 				lightMovingLeft = true;
 			}

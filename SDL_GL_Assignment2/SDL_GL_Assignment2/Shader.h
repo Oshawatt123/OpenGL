@@ -9,6 +9,8 @@
 #include "Transform.h"
 #include "LightBase.h"
 
+#include "Time.h"
+
 enum UNIFORMS
 {
 	MODEL_U,
@@ -17,6 +19,7 @@ enum UNIFORMS
 	FRAG_LIGHTCOLOR_U,
 	FRAG_LIGHTPOS_U,
 	FRAG_CAMERAPOS_U,
+	TIME_U,
 	NUMBER_UNIFORMS
 };
 

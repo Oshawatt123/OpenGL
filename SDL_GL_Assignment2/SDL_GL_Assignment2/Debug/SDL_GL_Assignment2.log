@@ -1,14 +1,13 @@
 ﻿  Main.cpp
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\corecrt_math_defines.h(22,1): warning C4005:  'M_PI': macro redefinition
 D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Libraries\SDL2-2.0.10\include\SDL_stdinc.h(499): message :  see previous definition of 'M_PI'
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(135,38): warning C4305:  'argument': truncation from 'double' to 'float'
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(245,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(246,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(303,48): warning C4305:  'argument': truncation from 'double' to 'float'
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(305,49): warning C4305:  'argument': truncation from 'double' to 'float'
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(311,22): warning C4018:  '<': signed/unsigned mismatch
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(179,8): warning C4101:  'B': unreferenced local variable
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(177,8): warning C4101:  'R': unreferenced local variable
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(180,8): warning C4101:  'A': unreferenced local variable
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(178,8): warning C4101:  'G': unreferenced local variable
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(137,38): warning C4305:  'argument': truncation from 'double' to 'float'
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(267,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(268,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(325,48): warning C4305:  'argument': truncation from 'double' to 'float'
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(327,49): warning C4305:  'argument': truncation from 'double' to 'float'
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(194,8): warning C4101:  'B': unreferenced local variable
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(192,8): warning C4101:  'R': unreferenced local variable
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(195,8): warning C4101:  'A': unreferenced local variable
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(193,8): warning C4101:  'G': unreferenced local variable
   SDL_GL_Assignment2.vcxproj -> D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\Debug\SDL_GL_Assignment2.exe

@@ -36,6 +36,9 @@
     <ClCompile Include="LightBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mesh.h">
@@ -59,6 +62,12 @@
     <ClInclude Include="LightBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="limefrag.frag">
@@ -71,6 +80,15 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="litFrag.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="morphgrid.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="basicvert.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="watermaybe.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

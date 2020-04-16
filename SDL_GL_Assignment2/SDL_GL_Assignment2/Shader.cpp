@@ -77,6 +77,8 @@ Shader::Shader(const std::string vertFilepath, const std::string fragFilepath, C
 	uniformLocation[FRAG_LIGHTCOLOR_U]	= glGetUniformLocation(program, "FragLightColor");
 	uniformLocation[FRAG_LIGHTPOS_U]	= glGetUniformLocation(program, "FragLightPos");
 
+	uniformLocation[TIME_U] = glGetUniformLocation(program, "u_time");
+
 
 	// assign camera reference
 	cam = &_cam;
@@ -131,4 +133,6 @@ void Shader::Update(Transform* transform, LightBase& light)
 	glUniform3f(uniformLocation[FRAG_LIGHTCOLOR_U], light.getColor().x,
 		light.getColor().y,
 		light.getColor().z);
+
+	glUniform1f(uniformLocation[TIME_U], (float)Time::Instance()->GetTimeSinceStart());
 }
