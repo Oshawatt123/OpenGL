@@ -15,8 +15,9 @@ mat4 Camera::GenerateViewMatrix()
 	forwardTarget = normalize(m_target);
 	Forward = normalize(m_target - m_transform.getPos());
 
-	std::cout << "TargetX" << xVal << std::endl;
-	std::cout << "xTheta" << xTheta << std::endl;
+
+	//std::cout << "TargetX" << xVal << std::endl;
+	//std::cout << "xTheta" << xTheta << std::endl;
 
 
 	// reset delta because it floats
@@ -28,8 +29,9 @@ mat4 Camera::GenerateViewMatrix()
 
 	ViewMatrix = glm::lookAt(m_transform.getPos(), m_transform.getPos() + forwardTarget, Up);
 
-	std::cout << "Target: " << m_target.x << " " << m_target.y << " " << m_target.z << std::endl;
-	std::cout << "Position: " << m_transform.getPos().x << " " << m_transform.getPos().y << " " << m_transform.getPos().z << std::endl;
+	//std::cout << "Target: " << m_target.x << " " << m_target.y << " " << m_target.z << std::endl;
+	//std::cout << "Position: " << m_transform.getPos().x << " " << m_transform.getPos().y << " " << m_transform.getPos().z << std::endl;
+
 	//std::cout << targetDeltaX <<   << targetDeltaY << std::endl;
 
 	return ViewMatrix;

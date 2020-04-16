@@ -1,6 +1,7 @@
 #version 450
 
 in vec3 VertexPosition;
+
 in vec2 TextureCoord;
 in vec3 Normal;
 in vec3 Tangent;
@@ -18,14 +19,14 @@ out mat3 TBN;
 void main()
 {
 	FragTextureCoord = TextureCoord;
-	FragPos = vec3(model * vec4(VertexPosition, 1.0f));
-	FragNormal = mat3(transpose(inverse(model))) * Normal;
+	FragPos = vec3(model * vec4(VertexPosition, 1.0));
+	FragNormal = inverse(transpose(mat3(model))) * Normal;
 
 	vec3 T = normalize(vec3(model * vec4(Tangent, 0.0)));
 	vec3 B = normalize(vec3(model * vec4(BiTangent, 0.0)));
 	vec3 N = normalize(vec3(model * vec4(Normal, 0.0)));
 
-	TBN = mat3(T,B,N);
+	TBN = mat3(T, N, B);
 
 	gl_Position = projection * view * model * vec4(VertexPosition, 1.0);
 }

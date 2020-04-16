@@ -126,6 +126,8 @@ void Shader::Update(Transform* transform, LightBase& light)
 		light.getTransform()->getPos().y,
 		light.getTransform()->getPos().z);
 
+	std::cout << "X: " << light.getTransform()->getPos().x << " Y: " << light.getTransform()->getPos().y << " Z: " << light.getTransform()->getPos().z << std::endl;
+
 	glUniform3f(uniformLocation[FRAG_LIGHTCOLOR_U], light.getColor().x,
 		light.getColor().y,
 		light.getColor().z);

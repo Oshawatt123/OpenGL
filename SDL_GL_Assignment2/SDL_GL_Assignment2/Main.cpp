@@ -132,7 +132,7 @@ int main(int argc, char* agrv[])
 
 	// make a camera
 
-	Camera cam = Camera(100, 1, 1, 100);
+	Camera cam = Camera(100, 1, 0.1, 100);
 	vec3 camPos = { 0, 0, -10 };
 	cam.m_transform.setPos(camPos);
 
@@ -149,9 +149,29 @@ int main(int argc, char* agrv[])
 		0,1,2,0,2,3
 	};
 
+	std::vector<vertex> cubeVertices;
+	cubeVertices.push_back(vertex(vec3(-0.5f, 0.5f, 1.0f), vec2(0, 0))); // top left
+	cubeVertices.push_back(vertex(vec3(0.5f, 0.5f, 1.0f), vec2(1, 0))); // top right
+	cubeVertices.push_back(vertex(vec3(0.5f, -0.5f, 1.0f), vec2(1, 1))); // bottom right
+	cubeVertices.push_back(vertex(vec3(-0.5f, -0.5f, 1.0f), vec2(0, 1))); // bottom left
+	cubeVertices.push_back(vertex(vec3(-0.5f, 0.5f, 2.0f), vec2(0, 0))); // top left
+	cubeVertices.push_back(vertex(vec3(0.5f, 0.5f, 2.0f), vec2(1, 0))); // top right
+	cubeVertices.push_back(vertex(vec3(0.5f, -0.5f, 2.0f), vec2(1, 1))); // bottom right
+	cubeVertices.push_back(vertex(vec3(-0.5f, -0.5f, 2.0f), vec2(0, 1))); // bottom left
+
+	unsigned int CubeIndices[]
+	{
+		0,1,2,0,2,3, // front
+		4,0,3,4,3,7, // left
+		5,7,4,5,6,7, // back
+		2,1,5,2,1,6, // right
+		0,5,4,0,7,5, // top
+		3,6,7,3,2,6  // bottom
+	};
+
 	// create shader program
 
-	Shader* limeShader = new Shader("../SDL_GL_Assignment2/simplevertex.vert", "../SDL_GL_Assignment2/texturedFrag.frag", cam);
+	Shader* phongShader = new Shader("../SDL_GL_Assignment2/simplevertex.vert", "../SDL_GL_Assignment2/texturedFrag.frag", cam);
 
 
 	float R;
@@ -181,18 +201,20 @@ int main(int argc, char* agrv[])
 	Mesh square1(&squareVertices[0], squareVertices.size(), &SquareIndices[0], 6);
 	sceneObject.push_back(&square1);
 
+	Mesh Cube1(&cubeVertices[0], cubeVertices.size(), &CubeIndices[0], 36);
+	//sceneObject.push_back(&Cube1);
+	//Cube1.m_transform.Translate(-3, 0, 0);
+
 	bool playing = true;
 
 	LightBase* light = new LightBase();
+
+	bool lightMovingLeft = false;
 	
+	bool paused = false;
 
 	while (playing)
 	{
-		glViewport(0, 0, 1920, 1080);
-		glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
 		{
@@ -261,18 +283,54 @@ int main(int argc, char* agrv[])
 		{
 			cam.m_transform.Translate(cam.getForwardVector() * -0.1f);
 		}
-
-		for (int i = 0; i < sceneObject.size(); i++)
+		if (keyboardStates[SDL_SCANCODE_P])
 		{
-			DrawThing(*sceneObject[i], *limeShader, *light, diffuseTex, normalTex);
+			paused = true;
 		}
+		else
+			paused = false;
+		if (!paused)
+		{
+			glViewport(0, 0, 1920, 1080);
+			glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		light->Draw(&cam);
 
-		// swap buffers
-		SDL_GL_SwapWindow(window);
 
-		system("CLS");
+
+			// move the light
+			if (lightMovingLeft)
+				light->getTransform()->Translate(0.01, 0, 0);
+			else
+				light->getTransform()->Translate(-0.01, 0, 0);
+
+			// draw the light gizmo
+			light->Draw(&cam);
+
+			// draw my scene objects
+			for (int i = 0; i < sceneObject.size(); i++)
+			{
+				DrawThing(*sceneObject[i], *phongShader, *light, diffuseTex, normalTex);
+			}
+
+			std::cout << "X: " << light->getTransform()->getPos().x << " Y: " << light->getTransform()->getPos().y << " Z: " << light->getTransform()->getPos().z << std::endl;
+
+
+			// swap buffers
+			SDL_GL_SwapWindow(window);
+
+			//system("CLS");
+
+			if (light->getTransform()->getPos().x >= 1)
+			{
+				lightMovingLeft = false;
+			}
+			if (light->getTransform()->getPos().x <= -1)
+			{
+				lightMovingLeft = true;
+			}
+		}
+		
 	}
 
 	for (auto object : sceneObject)

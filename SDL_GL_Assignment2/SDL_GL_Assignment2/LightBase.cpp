@@ -3,6 +3,7 @@
 LightBase::LightBase()
 {
 	color = vec3(1, 1, 1);
+	transform.Translate(1, 0, 0);
 }
 
 LightBase::~LightBase()

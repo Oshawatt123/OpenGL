@@ -70,5 +70,8 @@
     <None Include="texturedFrag.frag">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="litFrag.frag">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

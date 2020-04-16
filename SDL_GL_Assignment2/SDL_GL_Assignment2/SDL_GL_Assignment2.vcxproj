@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="limefrag.frag" />
+    <None Include="litFrag.frag" />
     <None Include="simplevertex.vert" />
     <None Include="texturedFrag.frag" />
   </ItemGroup>

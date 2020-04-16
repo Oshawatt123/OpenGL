@@ -1,39 +1,14 @@
 ﻿  Main.cpp
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\corecrt_math_defines.h(22,1): warning C4005:  'M_PI': macro redefinition
 D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Libraries\SDL2-2.0.10\include\SDL_stdinc.h(499): message :  see previous definition of 'M_PI'
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(223,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(224,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(265,21): warning C4018:  '<': signed/unsigned mismatch
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(159,8): warning C4101:  'B': unreferenced local variable
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(157,8): warning C4101:  'R': unreferenced local variable
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(160,8): warning C4101:  'A': unreferenced local variable
-D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(158,8): warning C4101:  'G': unreferenced local variable
-LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-LINK : warning LNK4286: symbol '___glewUseProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'LightBase.obj'
-LINK : warning LNK4286: symbol '___glewUseProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewBindBuffer' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
-LINK : warning LNK4286: symbol '___glewBufferData' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
-LINK : warning LNK4286: symbol '___glewGenBuffers' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
-LINK : warning LNK4286: symbol '___glewEnableVertexAttribArray' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
-LINK : warning LNK4286: symbol '___glewVertexAttribPointer' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
-LINK : warning LNK4286: symbol '___glewBindVertexArray' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
-LINK : warning LNK4286: symbol '___glewDeleteVertexArrays' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
-LINK : warning LNK4286: symbol '___glewGenVertexArrays' defined in 'glew32s.lib(glew.obj)' is imported by 'Mesh.obj'
-LINK : warning LNK4286: symbol '___glewAttachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewCompileShader' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewCreateProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewCreateShader' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewDeleteProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewDeleteShader' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewDetachShader' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewGetProgramInfoLog' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewGetProgramiv' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewGetShaderInfoLog' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewGetShaderiv' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewGetUniformLocation' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewLinkProgram' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewShaderSource' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewUniform3f' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-LINK : warning LNK4286: symbol '___glewUniformMatrix4fv' defined in 'glew32s.lib(glew.obj)' is imported by 'Shader.obj'
-glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\Debug\vc120.pdb'; linking object as if no debug info
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(135,38): warning C4305:  'argument': truncation from 'double' to 'float'
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(245,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(246,28): warning C4244:  '=': conversion from 'Sint32' to 'float', possible loss of data
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(303,48): warning C4305:  'argument': truncation from 'double' to 'float'
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(305,49): warning C4305:  'argument': truncation from 'double' to 'float'
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(311,22): warning C4018:  '<': signed/unsigned mismatch
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(179,8): warning C4101:  'B': unreferenced local variable
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(177,8): warning C4101:  'R': unreferenced local variable
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(180,8): warning C4101:  'A': unreferenced local variable
+D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\SDL_GL_Assignment2\Main.cpp(178,8): warning C4101:  'G': unreferenced local variable
   SDL_GL_Assignment2.vcxproj -> D:\GitHub Tings\OpenGL\SDL_GL_Assignment2\Debug\SDL_GL_Assignment2.exe

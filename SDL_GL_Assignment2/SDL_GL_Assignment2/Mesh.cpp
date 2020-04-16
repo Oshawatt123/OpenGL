@@ -51,10 +51,6 @@ Mesh::Mesh(vertex* verts, unsigned int vertCount, unsigned int* indices, unsigne
 	glVertexAttribPointer(TEXCOORD_VB, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(TEXCOORD_VB);
 
-	// index
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vertexBufferObjects[INDEX_VB]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, numIndices * sizeof(unsigned int), indices, GL_STATIC_DRAW);
-
 	// normals
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObjects[NORMAL_VB]);
 	glBufferData(GL_ARRAY_BUFFER, vertCount * sizeof(Normals[0]), &Normals[0], GL_STATIC_DRAW);
@@ -72,6 +68,10 @@ Mesh::Mesh(vertex* verts, unsigned int vertCount, unsigned int* indices, unsigne
 	glBufferData(GL_ARRAY_BUFFER, vertCount * sizeof(biTangents[0]), &biTangents[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(BITANGENT_VB, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(BITANGENT_VB);
+
+	// index
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vertexBufferObjects[INDEX_VB]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, numIndices * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
 	// cleanup
 	glBindVertexArray(0);
@@ -106,33 +106,29 @@ void Mesh::CalculateTangentBiTangent(vertex* vertices, unsigned int vertCount, u
 		vertex v2 = vertices[indices[i+2]];
 
 		vec3 edge1 = v1.Position - v0.Position;
-		vec3 edge2 = v2.Position - v1.Position;
+		vec3 edge2 = v2.Position - v0.Position;
 
 		GLfloat deltaU1 = v1.TextureCoord.x - v0.TextureCoord.x;
 		GLfloat deltaV1 = v1.TextureCoord.y - v0.TextureCoord.y;
 		GLfloat deltaU2 = v2.TextureCoord.x - v0.TextureCoord.x;
 		GLfloat deltaV2 = v2.TextureCoord.y - v0.TextureCoord.y;
 
-		GLfloat f = 1.0f / (deltaU1 * deltaV2 - deltaU2 * deltaV1);
+		GLfloat f = 1.0f / (deltaU1 * deltaV2 - deltaV1 * deltaU2);
 
 		vec3 tangent;
 		vec3 biTangent;
 
-		tangent.x = f * (deltaV2 * edge1.x - deltaV1 * edge2.x);
-		tangent.y = f * (deltaV2 * edge1.y - deltaV1 * edge2.y);
-		tangent.z = f * (deltaV2 * edge1.z - deltaV1 * edge2.z);
+		tangent = f * (edge1 * deltaV2 - edge2 * deltaV1);
 
-		biTangent.x = f * (-deltaU2 * edge1.x + deltaU1 * edge2.x);
-		biTangent.y = f * (-deltaU2 * edge1.y + deltaU1 * edge2.y);
-		biTangent.z = f * (-deltaU2 * edge1.z + deltaU1 * edge2.z);
+		biTangent = f * (edge2 * deltaU1 - edge1 * deltaU2);
 
-		v0.tangent += tangent;
-		v1.tangent += tangent;
-		v2.tangent += tangent;
+		v0.tangent = tangent;
+		v1.tangent = tangent;
+		v2.tangent = tangent;
 
-		v0.biTangent += biTangent;
-		v1.biTangent += biTangent;
-		v2.biTangent += biTangent;
+		v0.biTangent = biTangent;
+		v1.biTangent = biTangent;
+		v2.biTangent = biTangent;
 
 		vertices[indices[i]] = v0;
 		vertices[indices[i+1]] = v1;
