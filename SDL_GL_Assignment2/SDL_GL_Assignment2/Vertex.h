@@ -2,11 +2,21 @@
 
 struct vertex
 {
-	vec3 Position;
-	vec2 TextureCoord;
+	glm::vec3 Position;
+	glm::vec2 TextureCoord;
 
-	vec3 tangent;
-	vec3 biTangent;
+	glm::vec3 tangent;
+	glm::vec3 biTangent;
+	glm::vec3 normal;
+
+	vertex()
+	{
+		this->Position = glm::vec3(0);
+		this->TextureCoord = glm::vec2(0);
+
+		this->tangent = glm::vec3(0);
+		this->biTangent = glm::vec3(0);
+	}
 
 	vertex(const float i_x, const float i_y, const float i_z)
 	{
@@ -16,19 +26,22 @@ struct vertex
 
 		TextureCoord = { 0,0 };
 
-		tangent = vec3(0);
-		biTangent = vec3(0);
+		tangent = glm::vec3(0);
+		biTangent = glm::vec3(0);
 	}
 
-	vertex(const vec3 position)
+	vertex(const glm::vec3 position)
 	{
 		vertex(position.x, position.y, position.z);
 	}
 
-	vertex(const vec3 position, const vec2 texCoord)
+	vertex(const glm::vec3 position, const glm::vec2 texCoord)
 	{
 		this->Position = position;
 		this->TextureCoord = texCoord;
+
+		this->tangent = glm::vec3(0);
+		this->biTangent = glm::vec3(0);
 	}
 
 	vertex(const vertex& vert)
@@ -36,7 +49,7 @@ struct vertex
 		this->Position = vert.Position;
 		TextureCoord = vert.TextureCoord;
 
-		tangent = vec3(0);
-		biTangent = vec3(0);
+		tangent = glm::vec3(0);
+		biTangent = glm::vec3(0);
 	}
 };

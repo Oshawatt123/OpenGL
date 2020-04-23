@@ -22,13 +22,15 @@ public:
 		//m_target = vec3(0);
 	}
 
+	void Translate(vec3 direction);
+
 	Transform m_transform;
 
 	mat4 GenerateViewMatrix();
 	mat4 GeneratePerspectiveProjectionMatrix();
 
 	vec3 m_target = { 1,1,1 };
-	vec3 forwardTarget = { 0,0,0 };
+	vec3 forwardTarget = { 1,1,1 };
 
 	float xTheta = 0;
 	float yTheta = 0;

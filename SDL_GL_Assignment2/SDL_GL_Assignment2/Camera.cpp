@@ -1,5 +1,12 @@
 #include "Camera.h"
 
+void Camera::Translate(vec3 direction)
+{
+	m_target += direction;
+
+	m_transform.Translate(direction);
+}
+
 mat4 Camera::GenerateViewMatrix()
 {
 	xTheta = fmod(xTheta + (targetDeltaX * sensitivity), 360.0f);

@@ -21,6 +21,7 @@ const float SCREEN_HEIGHT = 720;
 #include "Vertex.h"
 #include "Shader.h"
 #include "LightBase.h"
+#include "OBJLoader.h"
 
 #include "Time.h"
 
@@ -135,8 +136,9 @@ int main(int argc, char* agrv[])
 	// make a camera
 
 	Camera cam = Camera(100, 1, 0.1, 100);
-	vec3 camPos = { 0, 0, -10 };
+	vec3 camPos = { 0, 0, -1 };
 	cam.m_transform.setPos(camPos);
+	//cam.m_transform.setRotation(vec3(0, 0, 0));
 
 	// make a square
 
@@ -151,36 +153,27 @@ int main(int argc, char* agrv[])
 		0,1,2,0,2,3
 	};
 
-	std::vector<vertex> cubeVertices;
-	cubeVertices.push_back(vertex(vec3(-0.5f, 0.5f, 1.0f), vec2(0, 0))); // top left
-	cubeVertices.push_back(vertex(vec3(0.5f, 0.5f, 1.0f), vec2(1, 0))); // top right
-	cubeVertices.push_back(vertex(vec3(0.5f, -0.5f, 1.0f), vec2(1, 1))); // bottom right
-	cubeVertices.push_back(vertex(vec3(-0.5f, -0.5f, 1.0f), vec2(0, 1))); // bottom left
-	cubeVertices.push_back(vertex(vec3(-0.5f, 0.5f, 2.0f), vec2(0, 0))); // top left
-	cubeVertices.push_back(vertex(vec3(0.5f, 0.5f, 2.0f), vec2(1, 0))); // top right
-	cubeVertices.push_back(vertex(vec3(0.5f, -0.5f, 2.0f), vec2(1, 1))); // bottom right
-	cubeVertices.push_back(vertex(vec3(-0.5f, -0.5f, 2.0f), vec2(0, 1))); // bottom left
+	std::string AmbientLoc;
+	std::string DiffuseLoc;
+	std::string SpecLoc;
+	std::string NormalLoc;
 
-	unsigned int CubeIndices[]
-	{
-		0,1,2,0,2,3, // front
-		4,0,3,4,3,7, // left
-		5,7,4,5,6,7, // back
-		2,1,5,2,1,6, // right
-		0,5,4,0,7,5, // top
-		3,6,7,3,2,6  // bottom
-	};
+	std::vector<uint> Indices;
 
-	std::vector<vertex> waterVertices;
-	waterVertices.push_back(vertex(vec3(0.0f, 1.0f, 1.0f), vec2(0, 0))); // top left
-	waterVertices.push_back(vertex(vec3(1.0f, 1.0f, 1.0f), vec2(1, 0))); // top right
-	waterVertices.push_back(vertex(vec3(1.0f, 0.0, 1.0f), vec2(1, 1))); // bottom right
-	waterVertices.push_back(vertex(vec3(0.0f, 0.0f, 1.0f), vec2(0, 1))); // bottom left
+	std::vector<vertex> loadedOBJ = OBJLoader::LoadOBJ("../Models", "blocks_01.obj", AmbientLoc, DiffuseLoc, SpecLoc, NormalLoc, Indices);
 
-	unsigned int waterIndices[]
-	{
-		0,1,2,0,2,3
-	};
+	std::string str = "../Models/" + AmbientLoc;
+	std::cout << str << std::endl;
+	GLuint AmbTexID = LoadTexture(str);
+	str = "../Models/" + DiffuseLoc;
+	std::cout << str << std::endl;
+	GLuint DiffTexID = LoadTexture(str);
+	str = "../Models/" + SpecLoc;
+	std::cout << str << std::endl;
+	GLuint SpecTexID = LoadTexture(str);
+	str = "../Models/" + NormalLoc;
+	std::cout << str << std::endl;
+	GLuint NormTexID = LoadTexture(str);
 
 	// create shader program
 
@@ -216,13 +209,8 @@ int main(int argc, char* agrv[])
 	Mesh square1(&squareVertices[0], squareVertices.size(), &SquareIndices[0], 6);
 	sceneObject.push_back(&square1);
 
-	Mesh Cube1(&cubeVertices[0], cubeVertices.size(), &CubeIndices[0], 36);
-	sceneObject.push_back(&Cube1);
-	Cube1.m_transform.Translate(-3, 0, 0);
-
-	Mesh square2(&waterVertices[0], waterVertices.size(), &waterIndices[0], 6);
-	sceneObject.push_back(&square2);
-	square2.m_transform.Translate(2, 0, 0);
+	Mesh OBJ(&loadedOBJ[0], loadedOBJ.size(), &Indices[0], Indices.size(), glm::vec3(2, 2, 2));
+	sceneObject.push_back(&OBJ);
 
 	bool playing = true;
 
@@ -291,19 +279,19 @@ int main(int argc, char* agrv[])
 		if (keyboardStates[SDL_SCANCODE_A])
 		{
 
-			cam.m_transform.Translate(cam.getRightVector() * 0.1f);
+			cam.Translate(cam.getRightVector() * 0.1f);
 		}
 		if (keyboardStates[SDL_SCANCODE_D])
 		{
-			cam.m_transform.Translate(cam.getRightVector() * -0.1f);
+			cam.Translate(cam.getRightVector() * -0.1f);
 		}
 		if (keyboardStates[SDL_SCANCODE_W])
 		{
-			cam.m_transform.Translate(cam.getForwardVector() * 0.1f);
+			cam.Translate(cam.getForwardVector() * 0.1f);
 		}
 		if (keyboardStates[SDL_SCANCODE_S])
 		{
-			cam.m_transform.Translate(cam.getForwardVector() * -0.1f);
+			cam.Translate(cam.getForwardVector() * -0.1f);
 		}
 		if (keyboardStates[SDL_SCANCODE_P])
 		{
@@ -330,15 +318,13 @@ int main(int argc, char* agrv[])
 			light->Draw(&cam);
 
 			// draw my scene objects
-			//for (int i = 0; i < sceneObject.size(); i++)
-			//{
-				//DrawThing(*sceneObject[i], *morphgrid, *light, diffuseTex, normalTex);
-			//}
-
+			/*for (int i = 0; i < sceneObject.size(); i++)
+			{
+				DrawThing(*sceneObject[i], *phongShader, *light, diffuseTex, normalTex);
+			}*/
 
 			DrawThing(*sceneObject[0], *phongShader, *light, diffuseTex, normalTex);
-			DrawThing(*sceneObject[1], *morphgrid, *light, diffuseTex, normalTex);
-			DrawThing(*sceneObject[2], *waterShaderMaybe, *light, diffuseTex, normalTex);
+			DrawThing(*sceneObject[1], *phongShader, *light, DiffTexID, NormTexID);
 
 			std::cout << "X: " << light->getTransform()->getPos().x << " Y: " << light->getTransform()->getPos().y << " Z: " << light->getTransform()->getPos().z << std::endl;
 
