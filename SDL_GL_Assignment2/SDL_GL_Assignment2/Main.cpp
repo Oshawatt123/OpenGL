@@ -12,20 +12,15 @@ const float SCREEN_HEIGHT = 720;
 #include <vector>
 #include <stdio.h>
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-
-
-#include "Mesh.h"
+#include "Object.h"
 #include "Camera.h"
 #include "Vertex.h"
 #include "Shader.h"
 #include "LightBase.h"
-#include "OBJLoader.h"
 
 #include "Time.h"
 
-void DrawThing(Mesh& thingToDraw, Shader& program, LightBase& light, GLuint texID, GLuint normalID)//, vec2 screenPos, vec2 dimensions, vec4 colour)
+/*void DrawThing(Mesh& thingToDraw, Shader& program, LightBase& light, GLuint texID, GLuint normalID)//, vec2 screenPos, vec2 dimensions, vec4 colour)
 {
 	program.Bind();
 
@@ -43,52 +38,7 @@ void DrawThing(Mesh& thingToDraw, Shader& program, LightBase& light, GLuint texI
 
 	program.Update(&thingToDraw.m_transform, light);
 	thingToDraw.Draw();
-}
-
-GLuint LoadTexture(std::string texLocation)
-{
-	GLuint textureID;
-
-	// yummy hardcoding
-
-	int width, height, numComponents;
-
-	unsigned char* ImageData = stbi_load(texLocation.c_str(), &width, &height, &numComponents, STBI_rgb_alpha);
-
-	if (ImageData == NULL)
-	{
-		std::cerr << "Houston, the servers are streaming some unsettling images from " << texLocation << "\n";
-	}
-
-	GLenum format;
-	if (numComponents == 1)
-		format = GL_RED;
-	else if (numComponents == 3)
-		format = GL_RGB;
-	else if (numComponents == 4)
-		format = GL_RGBA;
-
-	glGenTextures(1, &textureID); // generate our buffer
-	glBindTexture(GL_TEXTURE_2D, textureID); // bind our texture ID to the buffer for use
-
-	// tell openGL how it should handle texture overlap and underlap
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT); // S and T are U and V
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT); // openGL is just special
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, ImageData);
-
-	if (glTexImage2D == NULL)
-	{
-		std::cout << "Texture not loaded by openGL!" << std::endl;
-	}
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-	stbi_image_free(ImageData);
-
-	return textureID;
-}
+}*/
 
 int main(int argc, char* agrv[])
 {
@@ -130,50 +80,12 @@ int main(int argc, char* agrv[])
 		std::cout << "Lil GLEW is not alright" << std::endl;
 	}
 
-	GLuint diffuseTex = LoadTexture("../SDL_GL_Assignment2/brickwall.jpg");
-	GLuint normalTex = LoadTexture("../SDL_GL_Assignment2/brickwall_normal.jpg");
-
 	// make a camera
 
 	Camera cam = Camera(100, 1, 0.1, 100);
 	vec3 camPos = { 0, 0, -1 };
 	cam.m_transform.setPos(camPos);
 	//cam.m_transform.setRotation(vec3(0, 0, 0));
-
-	// make a square
-
-	std::vector<vertex> squareVertices;
-	squareVertices.push_back(vertex(vec3(-0.5f, 0.5f, 1.0f),	vec2(0, 0))); // top left
-	squareVertices.push_back(vertex(vec3(0.5f, 0.5f, 1.0f),	vec2(1, 0))); // top right
-	squareVertices.push_back(vertex(vec3(0.5f, -0.5f, 1.0f),	vec2(1, 1))); // bottom right
-	squareVertices.push_back(vertex(vec3(-0.5f, -0.5f, 1.0f),	vec2(0, 1))); // bottom left
-
-	unsigned int SquareIndices[]
-	{
-		0,1,2,0,2,3
-	};
-
-	std::string AmbientLoc;
-	std::string DiffuseLoc;
-	std::string SpecLoc;
-	std::string NormalLoc;
-
-	std::vector<uint> Indices;
-
-	std::vector<vertex> loadedOBJ = OBJLoader::LoadOBJ("../Models", "blocks_01.obj", AmbientLoc, DiffuseLoc, SpecLoc, NormalLoc, Indices);
-
-	std::string str = "../Models/" + AmbientLoc;
-	std::cout << str << std::endl;
-	GLuint AmbTexID = LoadTexture(str);
-	str = "../Models/" + DiffuseLoc;
-	std::cout << str << std::endl;
-	GLuint DiffTexID = LoadTexture(str);
-	str = "../Models/" + SpecLoc;
-	std::cout << str << std::endl;
-	GLuint SpecTexID = LoadTexture(str);
-	str = "../Models/" + NormalLoc;
-	std::cout << str << std::endl;
-	GLuint NormTexID = LoadTexture(str);
 
 	// create shader program
 
@@ -204,13 +116,9 @@ int main(int argc, char* agrv[])
 	vec3 worldUp = { 0, 1.0f, 0 };
 
 
-	std::vector<Mesh*> sceneObject;
+	std::vector<Object*> sceneObject;
 
-	Mesh square1(&squareVertices[0], squareVertices.size(), &SquareIndices[0], 6);
-	sceneObject.push_back(&square1);
-
-	Mesh OBJ(&loadedOBJ[0], loadedOBJ.size(), &Indices[0], Indices.size(), glm::vec3(2, 2, 2));
-	sceneObject.push_back(&OBJ);
+	Object* myObj = new Object("Not Barry");
 
 	bool playing = true;
 
@@ -264,7 +172,7 @@ int main(int argc, char* agrv[])
 			{
 				if (e.key.keysym.scancode == SDL_SCANCODE_O)
 				{
-					sceneObject.push_back(new Mesh(&squareVertices[0], squareVertices.size(), &SquareIndices[0], 6, cam.m_transform.getPos() + cam.m_target));
+					//sceneObject.push_back(new Mesh(&squareVertices[0], squareVertices.size(), &SquareIndices[0], 6, cam.m_transform.getPos() + cam.m_target));
 					std::cout << "fsbnjfbnjif" << std::endl;
 				}
 				if (e.key.keysym.scancode == SDL_SCANCODE_R)
@@ -323,11 +231,9 @@ int main(int argc, char* agrv[])
 				DrawThing(*sceneObject[i], *phongShader, *light, diffuseTex, normalTex);
 			}*/
 
-			DrawThing(*sceneObject[0], *phongShader, *light, diffuseTex, normalTex);
-			DrawThing(*sceneObject[1], *phongShader, *light, DiffTexID, NormTexID);
-
 			std::cout << "X: " << light->getTransform()->getPos().x << " Y: " << light->getTransform()->getPos().y << " Z: " << light->getTransform()->getPos().z << std::endl;
 
+			myObj->Draw(*phongShader, *light);
 
 			// swap buffers
 			SDL_GL_SwapWindow(window);

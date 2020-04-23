@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(vertex* verts, unsigned int vertCount, unsigned int* indices, unsigned int numIndices, vec3 position)
+Mesh::Mesh(vertex* verts, unsigned int vertCount, unsigned int* indices, unsigned int numIndices)
 {
 	CalculateTangentBiTangent(verts, vertCount, indices, numIndices);
 
@@ -75,9 +75,6 @@ Mesh::Mesh(vertex* verts, unsigned int vertCount, unsigned int* indices, unsigne
 
 	// cleanup
 	glBindVertexArray(0);
-
-	m_transform = Transform();
-	m_transform.setPos(position);
 
 	m_pointCount = numIndices;
 }

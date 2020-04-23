@@ -7,6 +7,11 @@
 #include <map>
 
 #include "glm.hpp"
+#include "glew.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
+
 #include "Vertex.h"
 
 #define READ_EOL_PLUS1 line.substr(line.find(' ') + 1, line.find('/n'))
@@ -23,4 +28,6 @@ public:
 	static void LoadMaterial(const std::string& MatLibLoc,
 		std::string& AmbientLoc, std::string& DiffuseLoc,
 		std::string& SpecularLoc, std::string& NormalLoc);
+
+	static GLuint LoadTexture(std::string texLocation);
 };

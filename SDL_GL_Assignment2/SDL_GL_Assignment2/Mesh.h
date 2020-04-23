@@ -12,12 +12,10 @@
 class Mesh
 {
 public:
-	Mesh(vertex* verts, unsigned int vertCount, unsigned int* indices, unsigned int numIndices, vec3 position = vec3(0,0,0));
+	Mesh(vertex* verts, unsigned int vertCount, unsigned int* indices, unsigned int numIndices);
 
 	const void Draw();
 	~Mesh();
-
-	Transform m_transform;
 
 private:
 	enum
