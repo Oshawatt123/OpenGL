@@ -1,5 +1,8 @@
 #include "OBJLoader.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 std::vector<vertex> OBJLoader::LoadOBJ(const std::string& FolderLoc, const std::string& OBJFileName, std::string& AmbientLoc, std::string& DiffuseLoc, std::string& SpecularLoc, std::string& NormalLoc, std::vector<glm::uint>& indices)
 {
 	std::string line;
@@ -154,6 +157,8 @@ void OBJLoader::LoadMaterial(const std::string& MatLibLoc, std::string& AmbientL
 GLuint OBJLoader::LoadTexture(std::string texLocation)
 {
 	GLuint textureID;
+
+	std::cout << "Loading texture " << texLocation << std::endl;
 
 	// yummy hardcoding
 

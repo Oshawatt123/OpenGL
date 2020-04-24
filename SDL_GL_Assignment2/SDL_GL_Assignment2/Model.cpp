@@ -5,6 +5,11 @@ Model::Model(std::string ModelLoc, std::string ModelName)
 	vertices = OBJLoader::LoadOBJ(ModelLoc, ModelName, AmbientLoc, DiffuseLoc, SpecLoc, NormalLoc, Indices);
 
 	mesh = new Mesh(&vertices[0], vertices.size(), &Indices[0], Indices.size());
+
+	AmbTexID = OBJLoader::LoadTexture(ModelLoc + "/" + AmbientLoc);
+	DiffTexID = OBJLoader::LoadTexture(ModelLoc + "/" + DiffuseLoc);
+	SpecTexID = OBJLoader::LoadTexture(ModelLoc + "/" + SpecLoc);
+	NormTexID = OBJLoader::LoadTexture(ModelLoc + "/" + NormalLoc);
 }
 
 void Model::Draw(Shader& program, LightBase& light, Transform& transform)

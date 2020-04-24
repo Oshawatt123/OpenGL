@@ -131,7 +131,7 @@ int main(int argc, char* agrv[])
 	while (playing)
 	{
 
-		std::cout << (float)Time::Instance()->GetTimeSinceStart() << std::endl;
+		//std::cout << (float)Time::Instance()->GetTimeSinceStart() << std::endl;
 
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
@@ -231,9 +231,9 @@ int main(int argc, char* agrv[])
 				DrawThing(*sceneObject[i], *phongShader, *light, diffuseTex, normalTex);
 			}*/
 
-			std::cout << "X: " << light->getTransform()->getPos().x << " Y: " << light->getTransform()->getPos().y << " Z: " << light->getTransform()->getPos().z << std::endl;
+			//std::cout << "X: " << light->getTransform()->getPos().x << " Y: " << light->getTransform()->getPos().y << " Z: " << light->getTransform()->getPos().z << std::endl;
 
-			myObj->Draw(*phongShader, *light);
+			myObj->Draw(*morphgrid, *light);
 
 			// swap buffers
 			SDL_GL_SwapWindow(window);
