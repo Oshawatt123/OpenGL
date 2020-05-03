@@ -16,6 +16,11 @@ public:
 
 	void Draw(Shader& program, LightBase& light);
 
+	void SetScale(float newScale)
+	{
+		transform.setScale(glm::vec3(newScale, newScale, newScale));
+	}
+
 private:
 	Model* model;
 

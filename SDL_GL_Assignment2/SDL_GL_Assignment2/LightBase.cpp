@@ -2,12 +2,18 @@
 
 LightBase::LightBase()
 {
-	color = vec3(1, 1, 1);
+	lightData.color = vec3(1, 1, 1);
+	lightData.falloff = 2;
 	transform.Translate(1, 0, 0);
 }
 
 LightBase::~LightBase()
 {
+}
+
+void LightBase::Update()
+{
+	lightData.position = transform.getPos();
 }
 
 void LightBase::Draw(Camera* cam)
@@ -37,21 +43,21 @@ void LightBase::Draw(Camera* cam)
 		glColor3f(1, 0, 0);
 		// send a vertex position
 		glVertex3fv(&p1.x);
-		p2 = p1 + glm::vec3(1, 0, 0) * 0.1f;
+		p2 = (p1 + glm::vec3(1, 0, 0)) * 0.1f;
 		glColor3f(1, 0, 0);
 		glVertex3fv(&p2.x);
 
 
 		glColor3f(0, 1, 0);
 		glVertex3fv(&p1.x);
-		p2 = p1 + glm::vec3(0, 1, 0) * 0.1f;
+		p2 = (p1 + glm::vec3(0, 1, 0)) * 0.1f;
 		glColor3f(0, 1, 0);
 		glVertex3fv(&p2.x);
 
 
 		glColor3f(0, 0, 1);
 		glVertex3fv(&p1.x);
-		p2 = p1 + glm::vec3(0, 0, 1) * 0.1f;
+		p2 = (p1 + glm::vec3(0, 0, 1)) * 0.1f;
 		glColor3f(0, 0, 1);
 		glVertex3fv(&p2.x);
 	}
@@ -61,9 +67,4 @@ void LightBase::Draw(Camera* cam)
 Transform* LightBase::getTransform()
 {
 	return &transform;
-}
-
-vec3 LightBase::getColor()
-{
-	return color;
 }

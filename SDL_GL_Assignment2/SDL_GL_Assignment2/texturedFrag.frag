@@ -1,10 +1,17 @@
 #version 450
 
+struct GL_LightData
+{
+	vec3 position;
+	float falloff;
+	vec3 color;
+};
+
+
 uniform sampler2D texture_diffuse;
 uniform sampler2D texture_normal;
 
-uniform vec3 FragLightColor;
-uniform vec3 FragLightPos;
+uniform GL_LightData lightData;
 uniform vec3 FragCamPos;
 
 in vec2 FragTextureCoord;
@@ -17,7 +24,7 @@ void main() {
 
 	// ambient
 	float ambientStrength = 0.2f;
-	vec3 ambient = ambientStrength * FragLightColor;
+	vec3 ambient = ambientStrength * lightData.color;
 
 	// diffuse
 	//vec3 normal = normalize(FragNormal);
@@ -25,16 +32,19 @@ void main() {
 	normal = normalize((normal * 2.0) - 1.0);
 	normal = normalize(TBN*normal);
 
-	vec3 lightDir = normalize(FragLightPos - FragPos);
+	float lightDistance = distance(lightData.position, FragPos);
+	float falloffEffect = lightData.falloff / lightDistance;
+
+	vec3 lightDir = normalize(lightData.position - FragPos);
 	float diff = max(dot(normal, lightDir), 0.0);
-	vec3 diffuse = diff * FragLightColor;
+	vec3 diffuse = (diff * lightData.color) * falloffEffect;
 
 	// specular
 	float specularStrength = 80f;
 	vec3 viewDir = normalize(FragCamPos - FragPos);
 	vec3 reflectDir = reflect(-lightDir, normal);
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-	vec3 specular = vec3(specularStrength * spec);
+	vec3 specular = vec3(specularStrength * spec) * falloffEffect;
 
 	//vec4 result = vec4( vec3(FragTextureCoord.x, FragTextureCoord.y, 0), 1.0f);
 	//vec4 result = vec4( vec3(FragTextureCoord.x, FragTextureCoord.y, 0) * (ambient + diff + spec), 1.0f);

@@ -12,5 +12,5 @@ void main()
 {
 	FragPos = vec3(model * vec4(VertexPosition, 1.0));
 
-	gl_Position = projection * view * model * vec4(VertexPosition, 1.0);
+	gl_Position = projection * view * model * vec4(VertexPosition, 1.0) * 0.1;
 }

@@ -118,7 +118,9 @@ int main(int argc, char* agrv[])
 
 	std::vector<Object*> sceneObject;
 
-	Object* myObj = new Object("Not Barry");
+	Object* hotdog = new Object("../Models","objHotdog.obj","Not Barry");
+	Object* myOBJ = new Object("Not Barry");
+	myOBJ->SetScale(0.05f);
 
 	bool playing = true;
 
@@ -233,7 +235,8 @@ int main(int argc, char* agrv[])
 
 			//std::cout << "X: " << light->getTransform()->getPos().x << " Y: " << light->getTransform()->getPos().y << " Z: " << light->getTransform()->getPos().z << std::endl;
 
-			myObj->Draw(*morphgrid, *light);
+			myOBJ->Draw(*phongShader, *light);
+			//hotdog->Draw(*morphgrid, *light);
 
 			// swap buffers
 			SDL_GL_SwapWindow(window);

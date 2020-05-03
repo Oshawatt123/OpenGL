@@ -69,15 +69,16 @@ Shader::Shader(const std::string vertFilepath, const std::string fragFilepath, C
 	glLinkProgram(program);
 
 	// assign uniform locations
-	uniformLocation[MODEL_U]			= glGetUniformLocation(program, "model");
-	uniformLocation[VIEW_U]				= glGetUniformLocation(program, "view");
-	uniformLocation[PROJECTION_U]		= glGetUniformLocation(program, "projection");
+	uniformLocation[MODEL_U]				= glGetUniformLocation(program, "model");
+	uniformLocation[VIEW_U]					= glGetUniformLocation(program, "view");
+	uniformLocation[PROJECTION_U]			= glGetUniformLocation(program, "projection");
 
-	uniformLocation[FRAG_CAMERAPOS_U]	= glGetUniformLocation(program, "FragCamPos");
-	uniformLocation[FRAG_LIGHTCOLOR_U]	= glGetUniformLocation(program, "FragLightColor");
-	uniformLocation[FRAG_LIGHTPOS_U]	= glGetUniformLocation(program, "FragLightPos");
+	uniformLocation[FRAG_CAMERAPOS_U]		= glGetUniformLocation(program, "FragCamPos");
+	uniformLocation[FRAG_LIGHTCOLOR_U]		= glGetUniformLocation(program, "lightData.color");
+	uniformLocation[FRAG_LIGHTPOS_U]		= glGetUniformLocation(program, "lightData.position");
+	uniformLocation[FRAG_LIGHTFALLOFF_U]	= glGetUniformLocation(program, "lightData.falloff");
 
-	uniformLocation[TIME_U] = glGetUniformLocation(program, "u_time");
+	uniformLocation[TIME_U]					= glGetUniformLocation(program, "u_time");
 
 
 	// assign camera reference
@@ -128,9 +129,11 @@ void Shader::Update(Transform* transform, LightBase& light)
 		light.getTransform()->getPos().y,
 		light.getTransform()->getPos().z);
 
-	glUniform3f(uniformLocation[FRAG_LIGHTCOLOR_U], light.getColor().x,
-		light.getColor().y,
-		light.getColor().z);
+	glUniform3f(uniformLocation[FRAG_LIGHTCOLOR_U], light.lightData.color.x,
+		light.lightData.color.y,
+		light.lightData.color.z);
+
+	glUniform1f(uniformLocation[FRAG_LIGHTFALLOFF_U], light.lightData.falloff);
 
 	glUniform1f(uniformLocation[TIME_U], (float)Time::Instance()->GetTimeSinceStart());
 }
