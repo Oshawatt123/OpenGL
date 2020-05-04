@@ -11,7 +11,7 @@ class Model
 public:
 	Model(std::string ModelLoc, std::string ModelName);
 
-	void Draw(Shader& program, LightBase& light, Transform& transform);
+	void Draw(Shader& program, Transform& transform, LightBase& light, LightBase* light2 = nullptr);
 
 private:
 

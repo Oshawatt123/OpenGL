@@ -14,7 +14,7 @@ public:
 
 	std::string ObjectName;
 
-	void Draw(Shader& program, LightBase& light);
+	void Draw(Shader& program, LightBase& light, LightBase* light2 = nullptr);
 
 	void SetScale(float newScale)
 	{

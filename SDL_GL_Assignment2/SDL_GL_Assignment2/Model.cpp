@@ -12,7 +12,7 @@ Model::Model(std::string ModelLoc, std::string ModelName)
 	NormTexID = OBJLoader::LoadTexture(ModelLoc + "/" + NormalLoc);
 }
 
-void Model::Draw(Shader& program, LightBase& light, Transform& transform)
+void Model::Draw(Shader& program, Transform& transform, LightBase& light, LightBase* light2)
 {
 	program.Bind();
 
@@ -28,7 +28,7 @@ void Model::Draw(Shader& program, LightBase& light, Transform& transform)
 	glUniform1i(textureLoc, 1); // 1 for location 1
 	glBindTexture(GL_TEXTURE_2D, NormTexID);
 
-	program.Update(&transform, light);
+	program.Update(&transform, light, light2);
 
 	mesh->Draw();
 }

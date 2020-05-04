@@ -74,9 +74,13 @@ Shader::Shader(const std::string vertFilepath, const std::string fragFilepath, C
 	uniformLocation[PROJECTION_U]			= glGetUniformLocation(program, "projection");
 
 	uniformLocation[FRAG_CAMERAPOS_U]		= glGetUniformLocation(program, "FragCamPos");
-	uniformLocation[FRAG_LIGHTCOLOR_U]		= glGetUniformLocation(program, "lightData.color");
-	uniformLocation[FRAG_LIGHTPOS_U]		= glGetUniformLocation(program, "lightData.position");
-	uniformLocation[FRAG_LIGHTFALLOFF_U]	= glGetUniformLocation(program, "lightData.falloff");
+	uniformLocation[FRAG_LIGHTCOLOR_U]		= glGetUniformLocation(program, "lightData[0].color");
+	uniformLocation[FRAG_LIGHTPOS_U]		= glGetUniformLocation(program, "lightData[0].position");
+	uniformLocation[FRAG_LIGHTFALLOFF_U]	= glGetUniformLocation(program, "lightData[0].falloff");
+
+	uniformLocation[FRAG_LIGHTCOLOR_U2]		= glGetUniformLocation(program, "lightData[1].color");
+	uniformLocation[FRAG_LIGHTPOS_U2]		= glGetUniformLocation(program, "lightData[1].position");
+	uniformLocation[FRAG_LIGHTFALLOFF_U2]	= glGetUniformLocation(program, "lightData[1].falloff");
 
 	uniformLocation[TIME_U]					= glGetUniformLocation(program, "u_time");
 
@@ -115,7 +119,7 @@ void Shader::Bind()
 	glUseProgram(program);
 }
 
-void Shader::Update(Transform* transform, LightBase& light)
+void Shader::Update(Transform* transform, LightBase& light, LightBase* light2)
 {
 	glUniformMatrix4fv(uniformLocation[MODEL_U], 1, GL_FALSE, &transform->GetModel()[0][0]);
 	glUniformMatrix4fv(uniformLocation[PROJECTION_U], 1, GL_FALSE, &cam->GeneratePerspectiveProjectionMatrix()[0][0]);
@@ -134,6 +138,19 @@ void Shader::Update(Transform* transform, LightBase& light)
 		light.lightData.color.z);
 
 	glUniform1f(uniformLocation[FRAG_LIGHTFALLOFF_U], light.lightData.falloff);
+
+	if (light2 != nullptr)
+	{
+		glUniform3f(uniformLocation[FRAG_LIGHTPOS_U2], light2->getTransform()->getPos().x,
+			light2->getTransform()->getPos().y,
+			light2->getTransform()->getPos().z);
+
+		glUniform3f(uniformLocation[FRAG_LIGHTCOLOR_U2], light2->lightData.color.x,
+			light2->lightData.color.y,
+			light2->lightData.color.z);
+
+		glUniform1f(uniformLocation[FRAG_LIGHTFALLOFF_U2], light2->lightData.falloff);
+	}
 
 	glUniform1f(uniformLocation[TIME_U], (float)Time::Instance()->GetTimeSinceStart());
 }

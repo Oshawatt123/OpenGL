@@ -19,6 +19,9 @@ enum UNIFORMS
 	FRAG_LIGHTCOLOR_U,
 	FRAG_LIGHTPOS_U,
 	FRAG_LIGHTFALLOFF_U,
+	FRAG_LIGHTCOLOR_U2,
+	FRAG_LIGHTPOS_U2,
+	FRAG_LIGHTFALLOFF_U2,
 	FRAG_CAMERAPOS_U,
 	TIME_U,
 	NUMBER_UNIFORMS
@@ -34,7 +37,7 @@ public:
 
 	void Bind();
 
-	void Update(Transform* transform, LightBase& light);
+	void Update(Transform* transform, LightBase& light, LightBase* light2 = nullptr);
 
 	GLuint getProgram()
 	{

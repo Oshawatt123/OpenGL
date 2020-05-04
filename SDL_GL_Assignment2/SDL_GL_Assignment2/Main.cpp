@@ -20,26 +20,6 @@ const float SCREEN_HEIGHT = 720;
 
 #include "Time.h"
 
-/*void DrawThing(Mesh& thingToDraw, Shader& program, LightBase& light, GLuint texID, GLuint normalID)//, vec2 screenPos, vec2 dimensions, vec4 colour)
-{
-	program.Bind();
-
-	GLuint textureLoc;
-
-	glActiveTexture(GL_TEXTURE0);
-	textureLoc = glGetUniformLocation(program.getProgram(), "texture_diffuse");
-	glUniform1i(textureLoc, 0); // 0 for location 0
-	glBindTexture(GL_TEXTURE_2D, texID);
-
-	glActiveTexture(GL_TEXTURE1);
-	textureLoc = glGetUniformLocation(program.getProgram(), "texture_normal");
-	glUniform1i(textureLoc, 1); // 0 for location 0
-	glBindTexture(GL_TEXTURE_2D, normalID);
-
-	program.Update(&thingToDraw.m_transform, light);
-	thingToDraw.Draw();
-}*/
-
 int main(int argc, char* agrv[])
 {
 
@@ -125,6 +105,9 @@ int main(int argc, char* agrv[])
 	bool playing = true;
 
 	LightBase* light = new LightBase();
+	light->lightData.color = vec3(0, 0, 1);
+	LightBase* light2 = new LightBase();
+	light2->lightData.color = vec3(1, 0, 0);
 
 	bool lightMovingLeft = false;
 	
@@ -226,6 +209,7 @@ int main(int argc, char* agrv[])
 
 			// draw the light gizmo
 			light->Draw(&cam);
+			light2->Draw(&cam);
 
 			// draw my scene objects
 			/*for (int i = 0; i < sceneObject.size(); i++)
@@ -235,7 +219,7 @@ int main(int argc, char* agrv[])
 
 			//std::cout << "X: " << light->getTransform()->getPos().x << " Y: " << light->getTransform()->getPos().y << " Z: " << light->getTransform()->getPos().z << std::endl;
 
-			myOBJ->Draw(*phongShader, *light);
+			myOBJ->Draw(*phongShader, *light, light2);
 			//hotdog->Draw(*morphgrid, *light);
 
 			// swap buffers
@@ -245,7 +229,7 @@ int main(int argc, char* agrv[])
 			{
 				lightMovingLeft = false;
 			}
-			if (light->getTransform()->getPos().x <= -5)
+			if (light->getTransform()->getPos().x <= 0)
 			{
 				lightMovingLeft = true;
 			}

@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/23591264/how-to-pass-uniform-array-of-struct-to-shader-via-c-code

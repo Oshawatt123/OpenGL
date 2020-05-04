@@ -10,9 +10,9 @@ Object::Object(std::string ModelLoc, std::string modelName, std::string name)
 	Init(ModelLoc, modelName, name);
 }
 
-void Object::Draw(Shader& program, LightBase& light)
+void Object::Draw(Shader& program, LightBase& light, LightBase* light2)
 {
-	model->Draw(program, light, transform);
+	model->Draw(program, transform, light, light2);
 }
 
 void Object::Init(std::string ModelLoc, std::string modelName, std::string name)

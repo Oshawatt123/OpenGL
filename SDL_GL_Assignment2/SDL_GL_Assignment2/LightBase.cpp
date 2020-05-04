@@ -3,7 +3,7 @@
 LightBase::LightBase()
 {
 	lightData.color = vec3(1, 1, 1);
-	lightData.falloff = 2;
+	lightData.falloff = 0.1;
 	transform.Translate(1, 0, 0);
 }
 
