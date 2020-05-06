@@ -35,7 +35,7 @@ for(int i = 0; i < numLights; i++)
 
 	// ambient
 	float ambientStrength = 0.1f;
-	ambient += ambientStrength * lightData[i].color;
+	ambient += ambientStrength * vec3(1,1,1);
 
 	// diffuse
 	//vec3 normal = normalize(FragNormal);
@@ -55,7 +55,7 @@ for(int i = 0; i < numLights; i++)
 	vec3 viewDir = normalize(FragCamPos - FragPos);
 	vec3 reflectDir = reflect(-lightDir, normal);
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-	specular += vec3(specularStrength * spec) * falloffEffect;
+	specular += vec3(specularStrength * spec) * falloffEffect * lightData[i].color;
 
 }
 

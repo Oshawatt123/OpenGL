@@ -220,7 +220,7 @@ int main(int argc, char* agrv[])
 			//std::cout << "X: " << light->getTransform()->getPos().x << " Y: " << light->getTransform()->getPos().y << " Z: " << light->getTransform()->getPos().z << std::endl;
 
 			myOBJ->Draw(*phongShader, *light, light2);
-			//hotdog->Draw(*morphgrid, *light);
+			//hotdog->Draw(*phongShader, *light, light2);
 
 			// swap buffers
 			SDL_GL_SwapWindow(window);
